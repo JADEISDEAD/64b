@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder and Decoder (With Space Handling)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        textarea::placeholder {
+            color: #aaa;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+        }
+		  .reversed-copyright {
+            display: inline-block;
+            transform: scaleX(-1); /* This will flip the copyright symbol horizontally */
+        }
+    </style>
+</head>
+<body>
+    <h1>Base64 Encoder and Decoder</h1>
+
+    <textarea id="inputText" placeholder="Enter text here..."></textarea><br>
+
+    <button onclick="encodeBase64()">Encode to Base64</button>
+    <button onclick="decodeBase64()">Decode from Base64</button>
+
+    <div class="output">
+        <h3>Result:</h3>
+        <textarea id="outputText" placeholder="Output will appear here..."></textarea>
+    </div>
+
+    <script>
+        // Function to encode the input text to Base64 while keeping spaces intact
+        function encodeBase64() {
+            const inputText = document.getElementById('inputText').value;
+            // Replace spaces with a special placeholder before encoding
+            const preEncoded = inputText.replace(/ /g, '%%SPACE%%');
+            const encoded = btoa(preEncoded);  // Encoding the processed text into Base64
+            document.getElementById('outputText').value = encoded;
+        }
+
+        // Function to decode Base64 text to the original string and replace special space markers
+        function decodeBase64() {
+            const inputText = document.getElementById('inputText').value;
+            try {
+                const decoded = atob(inputText);  // Decoding the Base64 input
+                // Replace the special space markers back to actual spaces
+                const originalText = decoded.replace(/%%SPACE%%/g, ' ');
+                document.getElementById('outputText').value = originalText;
+            } catch (e) {
+                document.getElementById('outputText').value = "Invalid Base64 input!";
+            }
+        }
+    </script>
+</body>
+  <footer>
+        <p><span class="reversed-copyright">&copy;</span> 2025 SEAL Ent. </p>
+    </footer>
+</html>
