@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Encoder and Decoder (With Space Handling)</title>
+    <title>Base64 Encoder and Decoder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,23 +59,19 @@
     </div>
 
     <script>
-        // Function to encode the input text to Base64 while keeping spaces intact
+        // Function to encode the input text to Base64
         function encodeBase64() {
             const inputText = document.getElementById('inputText').value;
-            // Replace spaces with a special placeholder before encoding
-            const preEncoded = inputText.replace(/ /g, '%%SPACE%%');
-            const encoded = btoa(preEncoded);  // Encoding the processed text into Base64
+            const encoded = btoa(inputText);  // Encoding the text into Base64
             document.getElementById('outputText').value = encoded;
         }
 
-        // Function to decode Base64 text to the original string and replace special space markers
+        // Function to decode Base64 text to the original string
         function decodeBase64() {
             const inputText = document.getElementById('inputText').value;
             try {
                 const decoded = atob(inputText);  // Decoding the Base64 input
-                // Replace the special space markers back to actual spaces
-                const originalText = decoded.replace(/%%SPACE%%/g, ' ');
-                document.getElementById('outputText').value = originalText;
+                document.getElementById('outputText').value = decoded;
             } catch (e) {
                 document.getElementById('outputText').value = "Invalid Base64 input!";
             }
