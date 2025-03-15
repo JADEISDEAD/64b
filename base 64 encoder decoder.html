@@ -42,7 +42,7 @@
             margin-top: 20px;
         }
         
-        /* Floating Button Styles */
+       
         .custom-button {
             position: absolute;
             top: 10px;
@@ -81,7 +81,7 @@
     <script>
         function encodeBase64() {
             const inputText = document.getElementById('inputText').value;
-            const encoder = new TextEncoder(); // Handles Unicode characters
+            const encoder = new TextEncoder(); 
             const encoded = btoa(String.fromCharCode(...encoder.encode(inputText)));
             document.getElementById('outputText').value = encoded;
         }
@@ -92,7 +92,7 @@
                 const decoded = new TextDecoder().decode(Uint8Array.from(atob(inputText), c => c.charCodeAt(0)));
                 document.getElementById('outputText').value = decoded;
             } catch (e) {
-                document.getElementById('outputText').value = "Invalid Base64 input!";
+                document.getElementById('outputText').value = "!INVALID INPUT FUCKO!";
             }
         }
     </script>
