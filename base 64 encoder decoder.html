@@ -8,6 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            position: relative;
         }
         textarea {
             width: 100%;
@@ -39,9 +40,30 @@
         .output {
             margin-top: 20px;
         }
+        
+        /* Floating Button Styles */
+        .custom-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        .custom-button img {
+            width: 40px;
+            height: 40px;
+        }
+        .custom-button img:hover {
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
+    <a href="https://jadeisdead.github.io/jadeisdead1/jadeisdead.html" target="_blank" class="custom-button">
+        <img src="https://media.tenor.com/yso9Ncqwm5UAAAAi/click-subscribe.gif" alt="Custom Button">
+    </a>
+
     <h1>Base64 Encoder and Decoder</h1>
 
     <textarea id="inputText" placeholder="Enter text here..."></textarea><br>
@@ -53,6 +75,7 @@
         <h3>Result:</h3>
         <textarea id="outputText" placeholder="Output will appear here..."></textarea>
     </div>
+
 
     <script>
         function encodeBase64() {
@@ -137,5 +160,4 @@
         <p><span class="reversed-copyright">&copy;</span> 2025 SEAL Ent. </p>
     </footer>
 </html>
-
 
