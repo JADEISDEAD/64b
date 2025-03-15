@@ -39,10 +39,6 @@
         .output {
             margin-top: 20px;
         }
-		  .reversed-copyright {
-            display: inline-block;
-            transform: scaleX(-1); 
-        }
     </style>
 </head>
 <body>
@@ -59,18 +55,17 @@
     </div>
 
     <script>
-       
         function encodeBase64() {
             const inputText = document.getElementById('inputText').value;
-            const encoded = btoa(inputText);  // Encoding the text into Base64
+            const encoder = new TextEncoder(); // Handles Unicode characters
+            const encoded = btoa(String.fromCharCode(...encoder.encode(inputText)));
             document.getElementById('outputText').value = encoded;
         }
 
-        
         function decodeBase64() {
             const inputText = document.getElementById('inputText').value;
             try {
-                const decoded = atob(inputText);  // Decoding the Base64 input
+                const decoded = new TextDecoder().decode(Uint8Array.from(atob(inputText), c => c.charCodeAt(0)));
                 document.getElementById('outputText').value = decoded;
             } catch (e) {
                 document.getElementById('outputText').value = "Invalid Base64 input!";
@@ -78,51 +73,69 @@
         }
     </script>
 </body>
-	<body>
-		   <h1>HOW THIS WORKS:</h1>
-		<h5>
-			1. Convert Data to Binary  
-   - Each character in the input text is converted to its 8-bit binary form.
-</h5>
-		<h5>
-2. Group into 6-bit Chunks  
-   - The binary data is split into chunks of 6 bits (instead of the usual 8-bit bytes).
-</h5>
-		<h5>
-3. Map to Base64 Characters  
-   - Each 6-bit chunk is converted into a corresponding Base64 character using this set:  
-     ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
-			</h5>
-<h5>
-4. Padding if Necessary  
-   - If the input isn't a multiple of 3 bytes, "=" is added at the end to make it a multiple of 4 Base64 characters.
-</h5>
-		<h5>
-Example:
+<body>
+    <h1>HOW THIS WORKS:</h1>
 
-Encoding "Hi" to Base64:
-			</h5>
-<h5>
-1. ASCII to Binary:  
-   H → 01001000, i → 01101001  
-   Binary: 0100100001101001  
-		</h5>
-<h5>
-2. Group into 6-bit chunks:  
-   010010 000110 1001  
-			</h5>
-<h5>
-3. Convert to Base64 Characters:  
-   010010 → S, 000110 → G, 100100 → k  
-		</h5>
-<h5>
-4. Add padding (if needed):  
-   "Hi" (2 bytes) is not a multiple of 3, so it needs one "=":  
-   Base64 Output: "SGk="
+    <h5>
+        1. Convert Data to UTF-8 Binary  
+        - Since Base64 only supports binary data, text is first encoded into UTF-8 bytes, ensuring compatibility with all languages (including Mandarin, Arabic, etc.).
+    </h5>
 
-		</h5>
-	</body>
+    <h5>
+        2. Group into 6-bit Chunks  
+        - The UTF-8 binary data is split into chunks of 6 bits (instead of the usual 8-bit bytes).
+    </h5>
+
+    <h5>
+        3. Map to Base64 Characters  
+        - Each 6-bit chunk is converted into a corresponding Base64 character using this set:  
+        ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+    </h5>
+
+    <h5>
+        4. Padding if Necessary  
+        - If the input isn't a multiple of 3 bytes, "=" is added at the end to make it a multiple of 4 Base64 characters.
+    </h5>
+
+    <h5>
+        Example:
+        Encoding "你好" ("Hello" in Mandarin) to Base64:
+    </h5>
+
+    <h5>
+        1. Convert to UTF-8 Binary:  
+        - "你" → 11100100 10111000 10101001  
+        - "好" → 11100101 10110001 10001101  
+        - Binary: 111001001011100010101001111001011011000110001101  
+    </h5>
+
+    <h5>
+        2. Group into 6-bit chunks:  
+        - 111001 001011 100010 101001 111001 011011 000110 001101  
+    </h5>
+
+    <h5>
+        3. Convert to Base64 Characters:  
+        - 111001 → 5  
+        - 001011 → L  
+        - 100010 → i  
+        - 101001 → W  
+        - 111001 → 5  
+        - 011011 → b  
+        - 000110 → G  
+        - 001101 → k  
+    </h5>
+
+    <h5>
+        4. Base64 Output:  
+        - "5LiW5bGk"  
+        (No padding needed in this case, as it's already a multiple of 3 bytes.)
+    </h5>
+
+</body>
   <footer>
         <p><span class="reversed-copyright">&copy;</span> 2025 SEAL Ent. </p>
     </footer>
 </html>
+
+
